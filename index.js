@@ -56,6 +56,9 @@ app.use("/api/auth", authRoutes)
 app.use(errorHandler)
 
 // Start server
+app.get('/', (req, res) => {
+  res.send(`Server running on port ${PORT}`)
+})
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
