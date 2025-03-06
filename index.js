@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(
   cors({
-    origin: "http://localhost:5173", // Your React app's URL
+    origin: "https://sage-1.vercel.app", // Your React app's URL
     credentials: true,
   }),
 )
