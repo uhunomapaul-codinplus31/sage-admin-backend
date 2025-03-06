@@ -15,10 +15,12 @@ const PORT = process.env.PORT || 5000
 // Middleware
 app.use(express.json())
 app.use(
-  cors({
-    origin: "https://sage-1.vercel.app", // Your React app's URL
-    credentials: true,
-  }),
+  cors(
+  //  {
+    // origin: "https://sage-1.vercel.app", // Your React app's URL
+  //  credentials: true,
+  //}
+  ),
 )
 
 // Test database connection
