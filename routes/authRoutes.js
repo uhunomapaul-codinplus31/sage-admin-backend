@@ -1,6 +1,9 @@
 const express = require("express")
 const router = express.Router()
 const authController = require("../controllers/authController")
+const dashController = require("../controllers/dashboard")
+const customerController = require("../controllers/customer")
+
 
 // Check if controller functions exist before using them
 if (!authController.login) {
@@ -8,7 +11,7 @@ if (!authController.login) {
 }
 
 // Auth routes with explicit error handling
-router.post("/login", (req, res, next) => {
+router.post("/auth/login", (req, res, next) => {
   try {
     return authController.login(req, res, next)
   } catch (error) {
@@ -18,13 +21,21 @@ router.post("/login", (req, res, next) => {
 })
 router.post("/dashboard", (req, res, next) => {
   try {
-    return authController.login(req, res, next)
+    return dashController.dashIndex(req, res, next)
   } catch (error) {
     console.error("Error in login route:", error)
     return res.status(500).json({ message: "Internal server error in login route" })
   }
 })
 
+router.get("/customer", (req, res, next) => {
+  try {
+    return customerController.cusIndex(req, res, next)
+  } catch (error) {
+    console.error("Error in login route:", error)
+    return res.status(500).json({ message: "Internal server error in login route" })
+  }
+})
 
 
 module.exports = router
