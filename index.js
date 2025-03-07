@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const authRoutes = require("./routes/authRoutes")
+const dashboard = require("./routes/authRoutes")
 const errorHandler = require("./middleware/errorHandler")
 const db = require("./db/db")
 
@@ -33,26 +34,27 @@ db.pool.query("SELECT NOW()", (err, res) => {
 })
 
 // Create users table if it doesn't exist
-const createUsersTable = async () => {
-  try {
-    await db.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        email VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-      )
-    `)
-    console.log("Users table created or already exists")
-  } catch (error) {
-    console.error("Error creating users table:", error)
-  }
-}
+// const createUsersTable = async () => {
+//   try {
+//     await db.query(`
+//       CREATE TABLE IF NOT EXISTS account (
+//         id SERIAL PRIMARY KEY,
+//         username VARCHAR(255) UNIQUE NOT NULL,
+//         password VARCHAR(255) NOT NULL,
 
-createUsersTable()
+//       )
+//     `)
+//     console.log("Users table created or already exists")
+//   } catch (error) {
+//     console.error("Error creating users table:", error)
+//   }
+// }
+
+// createUsersTable()
 
 // Routes
 app.use("/api/auth", authRoutes)
+app.use("/dashboard", dashboard)
 
 // Error handling middleware
 app.use(errorHandler)
