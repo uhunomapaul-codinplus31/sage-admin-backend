@@ -1,6 +1,6 @@
 
 const db = require("../db/db")
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 // Login controller
 const dashIndex = async (req, res) => {
@@ -23,9 +23,9 @@ const dashIndex = async (req, res) => {
     // Compare passwords
     // Login successful
     res.status(200).json({
-      message: "Login successful",
+      
       user: user,
-      token: token
+    
     })
   } catch (error) {
     console.error("Login error:", error)
