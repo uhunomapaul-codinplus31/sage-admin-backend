@@ -3,9 +3,9 @@ const router = express.Router()
 const authController = require("../controllers/dashboard")
 
 // Check if controller functions exist before using them
-if (!authController.login) {
-  console.error("Auth controller functions are not properly defined:", authController)
-}
+// if (!authController.login) {
+//   console.error("Auth controller functions are not properly defined:", authController)
+// }
 
 // Auth routes with explicit error handling
 
