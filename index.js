@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const authRoutes = require("./routes/authRoutes")
-const dashboard = require("./routes/authRoutes")
+const dashboard = require("./routes/dashboard")
 const errorHandler = require("./middleware/errorHandler")
 const db = require("./db/db")
 
