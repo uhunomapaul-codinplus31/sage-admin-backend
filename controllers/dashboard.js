@@ -1,30 +1,16 @@
 
 const db = require("../db/db")
-// const jwt = require('jsonwebtoken');
 
-// Login controller
 const dashIndex = async (req, res) => {
   try {
-    // const { username, password } = req.body
+    
+    const result = await db.query("SELECT * FROM dashboard_activities LIMIT 10")
+    const record = result.rows[0]
 
-    // Validate input
-    // if (!username || !password) {
-    //   return res.status(400).json({ message: "Email and password are required" })
-    // }
-
-    // Check if user exists
-    const userResult = await db.query("SELECT * FROM dashboard_activities LIMIT 10")
-    const user = userResult.rows[0]
-
-    // if (!user) {
-    //   return res.status(401).json({ message: "Invalid email or password" })
-    // }
-
-    // Compare passwords
-    // Login successful
+    
     res.status(200).json({
       
-      user: user,
+      record: record,
     
     })
   } catch (error) {
