@@ -6,7 +6,7 @@ const db = require("../db/db")
 const cusIndex = async (req, res) => {
   try {
     
-    const result = await db.query("SELECT * FROM customer_2_activities LIMIT 10")
+    const result = await db.query("SELECT * FROM user LIMIT 10")
     const record = result.rows[0]
 
     
