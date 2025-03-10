@@ -7,7 +7,7 @@ const cusIndex = async (req, res) => {
   try {
     
     const result = await db.query("SELECT * FROM userprofile LIMIT 10")
-    const record = result.rows[0]
+    const record = result.rows
 
     
     res.status(200).json({
