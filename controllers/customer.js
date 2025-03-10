@@ -6,7 +6,7 @@ const db = require("../db/db")
 const cusIndex = async (req, res) => {
   try {
     
-    const result = await db.query("SELECT * FROM userprofile LIMIT 10")
+    const result = await db.query('SELECT u.phone_number, u.email, u.first_name, u.last_name, u.is_phone_number_verified, u.uid, u.id, u.paystack_customer_id, up.is_verified FROM public."user" u LEFT JOIN public.userprofile up ON u.id = up.user_id')
     const record = result.rows
 
     
