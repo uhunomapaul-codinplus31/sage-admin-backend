@@ -5,21 +5,27 @@ const db = require("../db/db")
 // Login controller
 const invent_pd = async (req, res) => {
   try {
-
+  
     const result = await db.query(`SELECT cc.payment_status, cc.total_shipping, u.id AS user_id, u.first_name, u.last_name,
-    p.dealer, p.display_photos, p.category, p.quantity_in_stock, p.name
+    p.dealer_id, p.display_photos, p.category, p.quantity_in_stock, p.name
 FROM cartcheckout cc
 JOIN public."user" u ON cc.user_id = u.id
 LEFT JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item ON true
 LEFT JOIN public."product" p ON p.id = (item->>'product_id')::bigint
 WHERE cc.items IS NOT NULL`)
-    const record = result.rows[0]
-
+    const record = result.rows
+    // const allinv = await db.query('SELECT COUNT(*) FROM product')
+    // const in_stock = await db.query('SELECT COUNT(*) FROM product WHERE quantity_in_stock = false')
+    // const in_stocks = in_stock.rows[0].count
+    // const allinvs = allinv.rows[0].count
     
     res.status(200).json({
       
       record: record,
-    
+      inventory: 0,
+      in_stocks: 0,
+      low_stock: 0,
+      out_of_stock: 0
     })
   } catch (error) {
     console.error("Login error:", error)
