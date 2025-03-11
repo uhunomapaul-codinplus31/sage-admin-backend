@@ -13,7 +13,7 @@ const login = async (req, res) => {
     }
 
     // Check if user exists
-    const userResult = await db.query("SELECT * FROM account WHERE username = $1", [username])
+    const userResult = await db.query("SELECT * FROM admin WHERE username = $1", [username])
     const user = userResult.rows[0]
 
     if (!user) {
