@@ -23,7 +23,7 @@ const loan_app_all = async (req, res) => {
 const loan_rp_overdue_activities = async (req, res) => {
   try {
     
-    const result = await db.query(`SELECT cr.amount, cr.expected_payment_date, cr.credit_per_period, cr.offset_amount, cr.id, u.first_name, u.last_name
+    const result = await db.query(`SELECT cr.amount, cr.expected_payment_date, cr.created_at, cr.credit_per_period, cr.offset_amount, cr.id, u.first_name, u.last_name
     FROM creditrepayment cr
     JOIN creditaccount ca ON cr.account_id = ca.id
     JOIN "user" u ON ca.user_id = u.id`)
