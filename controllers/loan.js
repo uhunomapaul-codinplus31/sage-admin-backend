@@ -6,8 +6,11 @@ const db = require("../db/db")
 const loan_app_all = async (req, res) => {
   try {
     
-    const result = await db.query("SELECT * FROM loan_app_activities LIMIT 10")
-    const record = result.rows[0]
+    const result = await db.query(`SELECT cr.approved_amount,  cr.created_at, cr.status, cr.id, u.first_name, u.last_name
+    FROM creditapplication cr
+    JOIN creditaccount ca ON cr.account_id = ca.id
+    JOIN "user" u ON ca.user_id = u.id`)
+    const record = result.rows
 
     
     res.status(200).json({
