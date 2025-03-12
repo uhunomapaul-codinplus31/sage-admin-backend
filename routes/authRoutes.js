@@ -93,6 +93,15 @@ router.get("/loan/app/all", (req, res, next) => {
     return res.status(500).json({ message: "Internal server error in login route" })
   }
 })
+router.get("/loan/app/employment", (req, res, next) => {
+  try {
+  
+    return loanController.loan_app_id(req, res, next)
+  } catch (error) {
+    console.error("Error in login route:", error)
+    return res.status(500).json({ message: "Internal server error in login route" })
+  }
+})
 router.get("/loan/repayment/overdue", (req, res, next) => {
   try {
   

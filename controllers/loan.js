@@ -23,6 +23,26 @@ const loan_app_all = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message })
   }
 }
+const loan_app_id = async (req, res) => {
+  try {
+    
+    const result = await db.query(`SELECT cr.employment_start_date,  cr.monthly_income, cr.employment_status, cr.id, u.first_name, u.last_name
+    FROM employmentinfo cr
+    JOIN creditaccount ca ON cr.id = ca.id
+    JOIN "user" u ON ca.user_id = u.id`)
+    const record = result.rows
+
+    
+    res.status(200).json({
+      
+      record: record,
+    
+    })
+  } catch (error) {
+    console.error("Login error:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+}
 const loan_rp_overdue_activities = async (req, res) => {
   try {
     
@@ -81,6 +101,7 @@ const loan_rp_pd_activities = async (req, res) => {
 // Register controller
 module.exports = {
     loan_app_all,
+    loan_app_id,
     loan_rp_overdue_activities,
     loan_rp_pd_activities,
     loan_rp_on_activities
