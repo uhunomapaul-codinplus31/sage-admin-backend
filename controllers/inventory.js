@@ -28,10 +28,7 @@ const add_product = async (request, res) => {
     res.status(200).json({
       
       record: record,
-      inventory: 0,
-      in_stocks: 0,
-      low_stock: 0,
-      out_of_stock: 0
+
     })
   } catch (error) {
     console.error("Login error:", error)
@@ -106,5 +103,6 @@ const invent_od = async (req, res) => {
 module.exports = {
     invent_pd,
     invent_od,
-    invent_rr
+    invent_rr,
+    add_product
 }
