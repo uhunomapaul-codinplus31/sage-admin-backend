@@ -23,6 +23,14 @@ router.get("/supplier", (req, res, next) => {
     return res.status(500).json({ message: "Internal server error in login route" })
   }
 })
+router.get("/supplier/get", (req, res, next) => {
+  try { 
+    return supplierController.fetch_sup(req, res, next)
+  } catch (error) {
+    console.error("Error in login route:", error)
+    return res.status(500).json({ message: "Internal server error in login route" })
+  }
+})
 router.post("/auth/login", (req, res, next) => {
   try {
     return authController.login(req, res, next)

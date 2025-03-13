@@ -23,18 +23,16 @@ const supplier = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message })
   }
 }
-const payment_loan = async (req, res) => {
+const fetch_sup = async (req, res) => {
   try {
     
-    const result = await db.query("SELECT * FROM payment_loan_activities LIMIT 10")
-    const record = result.rows[0]
+    const result = await db.query("SELECT * FROM dealer LIMIT 10")
+    const record = result.rows
 
-    
     res.status(200).json({
-      
       record: record,
-    
     })
+
   } catch (error) {
     console.error("Login error:", error)
     res.status(500).json({ message: "Server error", error: error.message })
@@ -44,5 +42,6 @@ const payment_loan = async (req, res) => {
 
 // Register controller
 module.exports = {
-    supplier
+    supplier,
+    fetch_sup
 }
