@@ -1,6 +1,6 @@
 
 const db = require("../db/db")
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 // Login controller
 const add_product = async (request, res) => {
