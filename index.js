@@ -9,6 +9,7 @@ const db = require("./db/db")
 // Load environment variables
 dotenv.config()
  
+
 // Initialize Express app
 const app = express()
 const PORT = process.env.PORT || 5000
