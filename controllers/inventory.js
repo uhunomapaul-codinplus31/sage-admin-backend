@@ -1,6 +1,6 @@
 
 const db = require("../db/db")
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 // Login controller
 const add_product = async (request, res) => {
@@ -14,9 +14,9 @@ const add_product = async (request, res) => {
     const displayPhotos = request.files?.displayPhotos;
     const dealerID = request.body.dealerID;
 
-    const result = await db.query(`INSERT INTO product (name, description, quantity_in_stock, price, category, is_tcpo, display_photos, dealer_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-    RETURNING *`, [
+    const result = await db.query(`INSERT INTO product (public_id, name, description, quantity_in_stock, price, category, is_tcpo, display_photos, dealer_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    RETURNING *`, [dealerID,
       name, description, quantityInStock, price, category, isTCPO, displayPhotos, dealerID
   ])
     const record = result.rows
