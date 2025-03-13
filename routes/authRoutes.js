@@ -41,7 +41,7 @@ router.post("/auth/login", (req, res, next) => {
 })
 router.post("/product/add", (req, res, next) => {
   try {
-    return inventoryController.login(req, res, next)
+    return inventoryController.add_product(req, res, next)
   } catch (error) {
     console.error("Error in login route:", error)
     return res.status(500).json({ message: "Internal server error in login route" })

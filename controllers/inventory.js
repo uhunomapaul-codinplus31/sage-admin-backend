@@ -20,10 +20,7 @@ const add_product = async (request, res) => {
       name, description, quantityInStock, price, category, isTCPO, displayPhotos, dealerID
   ])
     const record = result.rows
-    // const allinv = await db.query('SELECT COUNT(*) FROM product')
-    // const in_stock = await db.query('SELECT COUNT(*) FROM product WHERE quantity_in_stock = false')
-    // const in_stocks = in_stock.rows[0].count
-    // const allinvs = allinv.rows[0].count
+  
     
     res.status(200).json({
       
@@ -35,6 +32,10 @@ const add_product = async (request, res) => {
     res.status(500).json({ message: "Server error", error: error.message })
   }
 }
+
+
+
+
 const invent_pd = async (req, res) => {
   try {
   
