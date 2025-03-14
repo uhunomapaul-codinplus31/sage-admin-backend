@@ -11,7 +11,7 @@ const add_product = async (request, res) => {
     const price = request.body.price;
     const category = request.body.category;
     const isTCPO = request.body.isTCPO;
-    const displayPhotos = request.files?.displayPhotos;
+    const displayPhotos = request.body.displayPhotos;
     const dealerID = request.body.dealerID;
     const public_id = uuidv4();
     const result = await db.query(`INSERT INTO product (public_id, name, description, quantity_in_stock, price, category, is_tcpo, display_photos, dealer_id)
@@ -39,21 +39,16 @@ const add_product = async (request, res) => {
 const invent_pd = async (req, res) => {
   try {
   
-    const result = await db.query(`SELECT cc.payment_status, cc.total_shipping, u.id AS user_id, u.first_name, u.last_name,
-    p.dealer_id, p.display_photos, p.category, p.quantity_in_stock, p.name
+    const result = await db.query(`SELECT cc.payment_status, cc.created_at,  cc.total_shipping, u.id AS user_id, u.first_name, u.last_name,
+    p.dealer_id, p.display_photos, p.category, p.quantity_in_stock,  p.name
 FROM cartcheckout cc
 JOIN public."user" u ON cc.user_id = u.id
 LEFT JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item ON true
-LEFT JOIN public."product" p ON p.id = (item->>'product_id')::bigint
+LEFT JOIN public."product" p ON p.product_id = (item->>'product_id')::bigint
 WHERE cc.items IS NOT NULL`)
     const record = result.rows
-    // const allinv = await db.query('SELECT COUNT(*) FROM product')
-    // const in_stock = await db.query('SELECT COUNT(*) FROM product WHERE quantity_in_stock = false')
-    // const in_stocks = in_stock.rows[0].count
-    // const allinvs = allinv.rows[0].count
     
     res.status(200).json({
-      
       record: record,
       inventory: 0,
       in_stocks: 0,
