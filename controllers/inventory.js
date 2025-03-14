@@ -40,9 +40,10 @@ const invent_pd = async (req, res) => {
   try {
   
     const result = await db.query(`SELECT cc.payment_status, cc.created_at,  cc.total_shipping, u.id AS user_id, u.first_name, u.last_name,
-    p.dealer_id, p.display_photos, p.category, p.quantity_in_stock,  p.name
+    p.dealer_id, p.display_photos, p.category, p.quantity_in_stock,  p.name, d.name
 FROM cartcheckout cc
 JOIN public."user" u ON cc.user_id = u.id
+LEFT JOIN public."dealer" d ON p.dealer_id = d.id
 LEFT JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item ON true
 LEFT JOIN public."product" p ON p.product_id = (item->>'product_id')::bigint
 WHERE cc.items IS NOT NULL`)
