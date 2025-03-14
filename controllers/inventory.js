@@ -39,7 +39,7 @@ const add_product = async (request, res) => {
 const invent_pd = async (req, res) => {
   try {
   
-  const result = await db.query(`SELECT cc.payment_status, cc.created_at, cc.total_shipping, 
+    const result = await db.query(`SELECT cc.payment_status, cc.created_at, cc.total_shipping, 
     u.id AS user_id, u.first_name, u.last_name,
     p.dealer_id, p.display_photos, p.category, 
     p.quantity_in_stock, p.name, d.name AS dealer_name
@@ -48,8 +48,7 @@ JOIN public."user" u ON cc.user_id = u.id
 LEFT JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item ON true
 LEFT JOIN public."product" p ON p.product_id = (item->>'product_id')::bigint
 JOIN public."dealer" d ON p.dealer_id = d.id  
-WHERE cc.items IS NOT NULL`) 
-
+WHERE cc.items IS NOT NULL`)
     const record = result.rows
     
     res.status(200).json({
@@ -68,7 +67,7 @@ const invent_rr = async (req, res) => {
   try {
     
     const result = await db.query("SELECT * FROM inventory_rr_activities LIMIT 10")
-    const record = result.rows
+    const record = result.rows[0]
 
     
     res.status(200).json({
