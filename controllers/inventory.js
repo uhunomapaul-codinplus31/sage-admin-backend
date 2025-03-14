@@ -83,8 +83,16 @@ const invent_rr = async (req, res) => {
 const invent_od = async (req, res) => {
   try {
     
-    const result = await db.query("SELECT * FROM inventory_od_activities LIMIT 10")
-    const record = result.rows[0]
+    const result = await db.query(`SELECT cc.id, cc.payment_status, cc.created_at, cc.total, cc.total_shipping,  cc.shipped,
+    u.id AS user_id, u.first_name, u.last_name,
+    p.dealer_id, p.display_photos, p.category, 
+    p.quantity_in_stock, p.name
+FROM cartcheckout cc
+JOIN public."user" u ON cc.user_id = u.id
+LEFT JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item ON true
+LEFT JOIN public."product" p ON p.product_id = (item->>'product_id')::bigint 
+WHERE cc.items IS NOT NULL`)
+    const record = result.rows
 
     
     res.status(200).json({
