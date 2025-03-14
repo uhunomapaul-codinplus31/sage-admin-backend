@@ -27,7 +27,7 @@ const loan_app_id = async (req, res) => {
   try {
     
     const result = await db.query(`SELECT cr.employment_start_date,  cr.monthly_income, cr.employment_status, cr.id, u.first_name, u.last_name
-    FROM creditapplication cr
+    FROM employmentinfo cr
     JOIN creditaccount ca ON cr.id = ca.id
     JOIN "user" u ON ca.user_id = u.id`)
     
