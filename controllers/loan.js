@@ -30,6 +30,7 @@ const loan_app_id = async (req, res) => {
     FROM creditapplication cr
     JOIN creditaccount ca ON cr.id = ca.id
     JOIN "user" u ON ca.user_id = u.id`)
+    
     const record = result.rows
 
     
