@@ -49,7 +49,7 @@ LEFT JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item ON true
 LEFT JOIN public."product" p ON p.product_id = (item->>'product_id')::bigint
 JOIN public."dealer" d ON p.dealer_id = d.id  
 WHERE cc.items IS NOT NULL`) 
-  //  const result = await db.query(`SELECT * FROM product`)
+
     const record = result.rows
     
     res.status(200).json({
