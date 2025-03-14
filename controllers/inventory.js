@@ -50,7 +50,7 @@ const invent_pd = async (req, res) => {
 // JOIN public."dealer" d ON p.dealer_id = d.id  
 // WHERE cc.items IS NOT NULL`)
 
-    const result = await db.query(`SELECT * FROM product LIMIT 10`)
+    const result = await db.query("SELECT * FROM product LIMIT 10")
     const record = result.rows
     
     res.status(200).json({
