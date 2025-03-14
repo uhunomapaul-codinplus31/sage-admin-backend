@@ -5,6 +5,7 @@ const db = require("../db/db")
 // Login controller
 const payment_rg = async (req, res) => {
   try {
+     
     
     const result = await db.query(`SELECT cc.id, cc.amount, cc.paid_amount,cc.next_payment, cc.status, 
     u.id AS user_id, u.first_name, u.last_name,
