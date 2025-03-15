@@ -26,6 +26,7 @@ LEFT JOIN public."product" p ON p.product_id = cc.product_id
     res.status(500).json({ message: "Server error", error: error.message })
   }
 }
+
 const payment_loan = async (req, res) => {
   try {
     
