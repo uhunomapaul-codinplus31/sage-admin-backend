@@ -7,22 +7,19 @@ const payment_rg = async (req, res) => {
   try {
      
     
-    const result = await db.query(`SELECT cc.id, cc.amount, cc.paid_amount,cc.next_payment, cc.status, 
+    const result = await db.query(`SELECT cc.id, cc.amount, cc.paid_amount,cc.next_payment, cc.status, cc.payment_type, 
     u.id AS user_id, u.first_name, u.last_name,
      p.name, c.transaction_type
 FROM rg_transaction cc
 JOIN public."user" u ON cc.user_id = u.id
-
 LEFT JOIN public."product" p ON p.product_id = cc.product_id 
 LEFT JOIN public."credittransaction" c ON cc.credit_id = c.id 
 `)
     const record = result.rows
 
     
-    res.status(200).json({
-      
+    res.status(200).json({  
       record: record,
-    
     })
   } catch (error) {
     console.error("Login error:", error)
