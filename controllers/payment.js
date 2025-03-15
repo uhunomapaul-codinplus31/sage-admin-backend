@@ -11,10 +11,10 @@ const payment_rg = async (req, res) => {
     u.id AS user_id, u.first_name, u.last_name,
      p.name, c.transaction_type
 FROM rg_transaction cc
-JOIN public."user" u ON cc.user_id = u.id
+JOIN public."user" u ON cc.user_id = u.id AND cc.credit_id = c.account_id
 LEFT JOIN public."product" p ON p.product_id = cc.product_id 
-LEFT JOIN public."credittransaction" c ON cc.credit_id = c.id 
 `)
+// LEFT JOIN public."credittransaction" c ON cc.credit_id = c.id 
     const record = result.rows
 
     
