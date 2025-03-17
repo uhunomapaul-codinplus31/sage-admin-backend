@@ -64,6 +64,14 @@ router.get("/customer", (req, res, next) => {
     return res.status(500).json({ message: "Internal server error in login route" })
   }
 })
+router.get("/customer/orderdetails", (req, res, next) => {
+  try {
+    return customerController.orderdetails(req, res, next)
+  } catch (error) {
+    console.error("Error in login route:", error)
+    return res.status(500).json({ message: "Internal server error in login route" })
+  }
+})
 router.get("/inventory/product", (req, res, next) => {
   try {
   
