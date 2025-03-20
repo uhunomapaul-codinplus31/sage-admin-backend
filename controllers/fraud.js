@@ -5,7 +5,7 @@ const fraudIndex = async (req, res) => {
   try {
     
     const result = await db.query("SELECT * FROM fraud_transaction LIMIT 10")
-    const record = result.rows[0]
+    const record = result.rows
 
     
     res.status(200).json({
