@@ -18,7 +18,7 @@ if (!authController.login) {
 // Auth routes with explicit error handling
 router.get("/fraud/risk", (req, res, next) => {
   try { 
-    return FraudController.fraudIndex(req, res, next)
+    return FraudController.risklevel(req, res, next)
   } catch (error) {
     console.error("Error in login route:", error)
     return res.status(500).json({ message: "Internal server error in login route" })
@@ -27,7 +27,7 @@ router.get("/fraud/risk", (req, res, next) => {
 
 router.get("/fraud/flaggeduser", (req, res, next) => {
   try { 
-    return FraudController.fraudIndex(req, res, next)
+    return FraudController.flaggeduser(req, res, next)
   } catch (error) {
     console.error("Error in login route:", error)
     return res.status(500).json({ message: "Internal server error in login route" })
