@@ -37,6 +37,23 @@ const flaggeduser = async (req, res) => {
   }
 }
 
+const risklevel = async (req, res) => {
+  try {
+    
+    const result = await db.query("SELECT * FROM risk_level_alert")
+    const record = result.rows
+
+    
+    res.status(200).json({
+      
+      record: record,
+    
+    })
+  } catch (error) {
+    console.error("Login error:", error)
+    res.status(500).json({ message: "Server error", error: error.message })
+  }
+  }
 
 // Register controller
 module.exports = {
