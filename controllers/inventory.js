@@ -13,11 +13,12 @@ const add_product = async (request, res) => {
     const isTCPO = request.body.isTCPO;
     const displayPhotos = request.body.displayPhotos;
     const dealerID = request.body.dealerID;
+    const dealerName = request.body.dealerName;
     const public_id = uuidv4();
-    const result = await db.query(`INSERT INTO product (public_id, name, description, quantity_in_stock, price, category, is_tcpo, display_photos, dealer_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    const result = await db.query(`INSERT INTO product (public_id, name, description, quantity_in_stock, price, category, is_tcpo, display_photos, dealer_id, dealer_name)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING *`, [public_id,
-      name, description, quantityInStock, price, category, isTCPO, displayPhotos, dealerID
+      name, description, quantityInStock, price, category, isTCPO, displayPhotos, dealerID, dealerName
   ])
     const record = result.rows
   
