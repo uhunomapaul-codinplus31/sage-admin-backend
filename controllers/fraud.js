@@ -19,7 +19,7 @@ const fraudIndex = async (req, res) => {
   }
 }
 
-const fraudIndex = async (req, res) => {
+const flaggeduser = async (req, res) => {
   try {
     
     const result = await db.query("SELECT * FROM flagged_user")
@@ -40,5 +40,6 @@ const fraudIndex = async (req, res) => {
 
 // Register controller
 module.exports = {
-    fraudIndex
+    fraudIndex,
+    flaggeduser
 }
