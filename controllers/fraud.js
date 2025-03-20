@@ -58,5 +58,6 @@ const risklevel = async (req, res) => {
 // Register controller
 module.exports = {
     fraudIndex,
-    flaggeduser
+    flaggeduser,
+    risklevel
 }
