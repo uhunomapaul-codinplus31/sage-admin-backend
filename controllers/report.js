@@ -20,10 +20,20 @@ FROM cartcheckout cc
 CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
 JOIN product p ON p.product_id = (item->>'product_id')::bigint
 GROUP BY p.name, p.category, p.display_photos`);
-    const salescategory = await db.query(`SELECT DISTINCT p.category
-FROM cartcheckout cc
-CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
-JOIN product p ON p.product_id = (item->>'product_id')::bigint;
+    const salescategory = await db.query(`WITH distinct_items AS (
+  SELECT DISTINCT 
+    (item->>'product_id')::bigint AS product_id
+  FROM cartcheckout cc
+  CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
+)
+SELECT 
+  p.category,
+  COUNT(p.product_id) AS category_count
+FROM distinct_items di
+JOIN product p ON p.product_id = di.product_id
+GROUP BY p.category
+ORDER BY category_count DESC;
+
 `);
     // const quan = await db.query(`SELECT SUM((item->>'quantity')::int) AS total_quantity, SUM(cc.total) AS total
     // FROM cartcheckout cc,
