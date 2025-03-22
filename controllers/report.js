@@ -35,11 +35,7 @@ GROUP BY p.category
 ORDER BY category_count DESC;
 
 `);
-    // const quan = await db.query(`SELECT SUM((item->>'quantity')::int) AS total_quantity, SUM(cc.total) AS total
-    // FROM cartcheckout cc,
-    //      jsonb_array_elements(cc.items::jsonb) AS item
-    // WHERE item->>'product_id' = $1 
-    // `, [id]);
+   
 
 
     res.status(200).json({  
