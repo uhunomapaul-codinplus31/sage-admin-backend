@@ -8,6 +8,7 @@ const paymentController = require("../controllers/payment")
 const loanController = require("../controllers/loan")
 const supplierController = require("../controllers/supplier")
 const FraudController = require("../controllers/fraud")
+const ReportController = require("../controllers/report")
 
 
 // Check if controller functions exist before using them
@@ -16,6 +17,15 @@ if (!authController.login) {
 }
 
 // Auth routes with explicit error handling
+router.get("/report/index", (req, res, next) => {
+  try { 
+    return ReportController.report_index(req, res, next)
+  } catch (error) {
+    console.error("Error in login route:", error)
+    return res.status(500).json({ message: "Internal server error in login route" })
+  }
+})
+
 router.get("/fraud/risk", (req, res, next) => {
   try { 
     return FraudController.risklevel(req, res, next)

@@ -3,17 +3,36 @@ const db = require("../db/db")
 // const jwt = require('jsonwebtoken');
 
 // Login controller
-const report_revenue = async (req, res) => {
+const report_index = async (req, res) => {
   try {
-     
+    let {id} = req.query;
     
-    const result = await db.query(`SELECT COUNT(*) AS total_count FROM cartcheckout`)
-// 
-    const record = result.rows
+    const revenue = await db.query(`SELECT SUM(total) FROM cartcheckout`);
+    const order = await db.query(`SELECT COUNT(*) FROM cartcheckout`);
+    const sales = await db.query(`SELECT SUM(total) FROM cartcheckout WHERE shipped = 'delivered'`);
+    const users = await db.query(`SELECT COUNT(*) FROM public.user WHERE status = 'active'`);
+    const product = await db.query(`SELECT 
+    SUM((item->>'quantity')::int) AS total_quantity, 
+    SUM(cc.total) AS total,
+    p.name AS product_name, 
+    p.display_photos
+FROM cartcheckout cc
+CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
+JOIN product p ON p.product_id = (item->>'product_id')::bigint
+GROUP BY p.name, p.display_photos`);
+    // const quan = await db.query(`SELECT SUM((item->>'quantity')::int) AS total_quantity, SUM(cc.total) AS total
+    // FROM cartcheckout cc,
+    //      jsonb_array_elements(cc.items::jsonb) AS item
+    // WHERE item->>'product_id' = $1 
+    // `, [id]);
 
-    
+
     res.status(200).json({  
-      record: record,
+      revenue: revenue.rows[0].sum,
+      sales: sales.rows[0].sum,
+      order: order.rows[0].count,
+      users: users.rows[0].count,
+      product: product.rows
     })
   } catch (error) {
     console.error("Login error:", error)
@@ -21,16 +40,10 @@ const report_revenue = async (req, res) => {
   }
 }
 
-const payment_loan = async (req, res) => {
+const report_sales = async (req, res) => {
   try {
     
-    const result = await db.query(`SELECT cc.id, cc.amount, cc.paid_amount,cc.next_payment, cc.status, cc.payment_type, 
-    u.id AS user_id, u.first_name, u.last_name,
-     p.name, c.transaction_type
-FROM loan_transaction cc
-JOIN public."user" u ON cc.user_id = u.id
-LEFT JOIN public."product" p ON p.product_id = cc.product_id 
-LEFT JOIN public."credittransaction" c ON cc.credit_id = c.id`);
+    const result = await db.query(`SELECT SUM(total) FROM cartcheckout WHERE shipped = 'delivered'`);
 
     const record = result.rows[0]
 
@@ -49,6 +62,6 @@ LEFT JOIN public."credittransaction" c ON cc.credit_id = c.id`);
 
 // Register controller
 module.exports = {
-    report_revenue,
-    payment_loan
+    report_index,
+    report_sales
 }

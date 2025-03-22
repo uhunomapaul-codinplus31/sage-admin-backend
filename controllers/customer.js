@@ -29,6 +29,7 @@ const cusIndex = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message })
   }
 }
+
 const orderdetails = async (req, res) => {
   try {
     let {id} = req.query;
