@@ -12,14 +12,14 @@ const report_index = async (req, res) => {
     const sales = await db.query(`SELECT SUM(total) FROM cartcheckout WHERE shipped = 'delivered'`);
     const users = await db.query(`SELECT COUNT(*) FROM public.user WHERE status = 'active'`);
     const product = await db.query(`SELECT 
-    SUM((item->>'quantity')::int) AS total_quantity, 
-    SUM(cc.total) AS total,
+    SUM((item->>'quantity')::int) AS sales, 
+    SUM(cc.total) AS revenue_generated,
     p.name AS product_name, p.category, 
     p.display_photos
 FROM cartcheckout cc
 CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
 JOIN product p ON p.product_id = (item->>'product_id')::bigint
-GROUP BY p.name, p.display_photos`);
+GROUP BY p.name, p.category, p.display_photos`);
     // const quan = await db.query(`SELECT SUM((item->>'quantity')::int) AS total_quantity, SUM(cc.total) AS total
     // FROM cartcheckout cc,
     //      jsonb_array_elements(cc.items::jsonb) AS item
