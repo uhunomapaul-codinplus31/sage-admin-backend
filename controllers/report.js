@@ -14,7 +14,7 @@ const report_index = async (req, res) => {
     const product = await db.query(`SELECT 
     SUM((item->>'quantity')::int) AS total_quantity, 
     SUM(cc.total) AS total,
-    p.name AS product_name, 
+    p.name AS product_name, p.category, 
     p.display_photos
 FROM cartcheckout cc
 CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
