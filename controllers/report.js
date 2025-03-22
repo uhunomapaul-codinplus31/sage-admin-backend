@@ -32,7 +32,7 @@ SELECT
 FROM distinct_items di
 JOIN product p ON p.product_id = di.product_id
 GROUP BY p.category
-ORDER BY category_count DESC;
+ORDER BY value DESC;
 
 `);
    
