@@ -27,8 +27,8 @@ GROUP BY p.name, p.category, p.display_photos`);
   CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
 )
 SELECT 
-  p.category,
-  COUNT(p.product_id) AS category_count
+  p.category AS name,
+  COUNT(p.product_id) AS value
 FROM distinct_items di
 JOIN product p ON p.product_id = di.product_id
 GROUP BY p.category
