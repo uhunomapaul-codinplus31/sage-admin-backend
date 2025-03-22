@@ -20,6 +20,11 @@ FROM cartcheckout cc
 CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
 JOIN product p ON p.product_id = (item->>'product_id')::bigint
 GROUP BY p.name, p.category, p.display_photos`);
+    const salescategory = await db.query(`SELECT DISTINCT p.category
+FROM cartcheckout cc
+CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
+JOIN product p ON p.product_id = (item->>'product_id')::bigint;
+`);
     // const quan = await db.query(`SELECT SUM((item->>'quantity')::int) AS total_quantity, SUM(cc.total) AS total
     // FROM cartcheckout cc,
     //      jsonb_array_elements(cc.items::jsonb) AS item
@@ -32,7 +37,8 @@ GROUP BY p.name, p.category, p.display_photos`);
       sales: sales.rows[0].sum,
       order: order.rows[0].count,
       users: users.rows[0].count,
-      product: product.rows
+      product: product.rows,
+      salescategory: salescategory.rows
     })
   } catch (error) {
     console.error("Login error:", error)
