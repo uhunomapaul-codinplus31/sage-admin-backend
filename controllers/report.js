@@ -20,19 +20,24 @@ FROM cartcheckout cc
 CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
 JOIN product p ON p.product_id = (item->>'product_id')::bigint
 GROUP BY p.name, p.category, p.display_photos`);
-    const salescategory = await db.query(`WITH distinct_items AS (
-  SELECT DISTINCT 
-    (item->>'product_id')::bigint AS product_id
-  FROM cartcheckout cc
-  CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
+    const salescategory = await db.query(`WITH category_counts AS (
+  SELECT 
+    p.category AS name,
+    COUNT(p.product_id)::int AS number  -- Count the number of products per category
+  FROM (
+    SELECT DISTINCT (item->>'product_id')::bigint AS product_id
+    FROM cartcheckout cc
+    CROSS JOIN LATERAL jsonb_array_elements(cc.items::jsonb) AS item
+  ) distinct_items
+  JOIN product p ON p.product_id = distinct_items.product_id
+  GROUP BY p.category
 )
 SELECT 
-  p.category AS name,
-  COUNT(p.product_id) AS value
-FROM distinct_items di
-JOIN product p ON p.product_id = di.product_id
-GROUP BY p.category
-ORDER BY value DESC;
+  name,
+  number,
+  ROUND((number * 100.0) / SUM(number) OVER (), 2)::int AS value  -- Calculate the percentage
+FROM category_counts
+ORDER BY number DESC;
 
 `);
    
